@@ -26,6 +26,8 @@ return new class extends Migration
             $table->enum('role', ['admin', 'driver', 'client'])->default('client');
             $table->enum('status', ['active', 'inactive', 'blocked'])->default('active');
 
+            $table->string('lang')->default('en');
+
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
