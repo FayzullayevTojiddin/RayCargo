@@ -20,7 +20,8 @@ return [
         'email_text'    => 'Tasdiqlash kodi: :code',
         'sms_text'      => 'Tasdiqlash kodi: :code',
         'user_blocked' => "Sizning hisobingiz bloklangan. Qo'llab-quvvatlash xizmatiga murojaat qiling.",
-        'login_success' => "Tizimga muvaffaqiyatli kirdingiz."
+        'login_success' => "Tizimga muvaffaqiyatli kirdingiz.",
+        'logout' => "Tizimdan muvaffaqiyatli chiqdingiz."
     ],
     'errors' => [
         'phone_invalid' => "Telefon raqam noto'g'ri formatda",
@@ -34,4 +35,7 @@ return [
         'value_blocked' => "Bu raqam/email vaqtincha bloklangan.",
         'ip_verify_limit' => "Juda ko'p tekshirish urinishi. :minutes daqiqadan keyin qayta urinib ko'ring."
     ],
+    'settings' => [
+        'edited_language' => "Til muvaffaqiyatli o‘zgartirildi",
+    ]
 ];
