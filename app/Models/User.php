@@ -7,6 +7,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Enums\User\UserRole;
 use App\Enums\User\UserStatus;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -38,4 +40,28 @@ class User extends Authenticatable
         'role' => UserRole::class,
         'status' => UserStatus::class,
     ];
+
+    protected static function booted(): void
+    {
+        static::created(function (User $user) {
+            $user->wallet()->create([
+                'balance' => 0,
+            ]);
+        });
+    }
+
+    public function client(): HasOne
+    {
+        return $this->hasOne(ClientProfile::class);
+    }
+
+    public function wallet(): HasOne
+    {
+        return $this->hasOne(Wallet::class);
+    }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

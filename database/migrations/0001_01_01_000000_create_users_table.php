@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->timestamp('last_login_at')->nullable();
 
-            $table->enum('role', ['admin', 'driver', 'client'])->default('client');
+            $table->enum('role', ['admin', 'courier', 'client'])->default('client');
             $table->enum('status', ['active', 'inactive', 'blocked'])->default('active');
 
             $table->string('lang')->default('en');
@@ -31,6 +31,13 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->index('role');
+            $table->index('status');
+            $table->index('login_type');
+            $table->index('last_login_at');
+            $table->index('lang');
+            $table->index(['role', 'status']);
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
