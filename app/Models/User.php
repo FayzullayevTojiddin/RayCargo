@@ -1,19 +1,31 @@
 <?php
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Enums\User\UserRole;
 use App\Enums\User\UserStatus;
+use Filament\Models\Contracts\HasName;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser, HasName
 {
     use HasFactory, Notifiable, HasApiTokens;
 
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->role === UserRole::ADMIN;
+    }
+
+    public function getFilamentName(): string
+    {
+        return $this->email;
+    }
     protected $fillable = [
         'email',
         'phone_number',
