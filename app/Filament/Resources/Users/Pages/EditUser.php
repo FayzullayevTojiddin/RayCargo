@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -17,37 +18,40 @@ class EditUser extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-
-            Action::make('notifications')
-                ->label(fn ($record) => 'Bildirishnomalar (' . $record->notifications()->where('is_read', false)->count() . ')')
-                ->icon('heroicon-o-bell')
-                ->modalHeading('Bildirishnomalar')
-                ->modalWidth('lg')
-                ->form([
-                    TextInput::make('title')
-                        ->label('Sarlavha')
-                        ->required(),
-
-                    Textarea::make('body')
-                        ->label('Xabar matni')
-                        ->rows(4)
-                        ->required(),
-                ])
-                ->action(function (array $data, $record) {
-                    $record->notifications()->create([
-                        'type' => 'manual',
-                        'title' => $data['title'],
-                        'body' => $data['body'],
-                        'is_read' => false,
-                    ]);
-
-                    Notification::make()
-                        ->title('Bildirishnoma yuborildi')
-                        ->success()
-                        ->send();
-                }),
-
             DeleteAction::make(),
+            ActionGroup::make([
+                Action::make('send_notification')
+                    ->label('Bildirishnoma yuborish')
+                    ->icon('heroicon-o-paper-airplane')
+                    ->color('success')
+                    ->modalHeading('Yangi bildirishnoma yuborish')
+                    ->form([
+                        TextInput::make('title')
+                            ->label('Sarlavha')
+                            ->required()
+                            ->maxLength(255),
+
+                        Textarea::make('body')
+                            ->label('Xabar matni')
+                            ->rows(4)
+                            ->required(),
+                    ])
+                    ->action(function (array $data, $record) {
+                        $record->notifications()->create([
+                            'type' => 'manual',
+                            'title' => $data['title'],
+                            'body' => $data['body'],
+                            'is_read' => false,
+                        ]);
+
+                        Notification::make()
+                            ->title('Bildirishnoma yuborildi')
+                            ->success()
+                            ->send();
+                    })
+                    ->modalSubmitActionLabel('Yuborish')
+                    ->modalCancelActionLabel('Bekor qilish'),
+            ]),
         ];
     }
 }

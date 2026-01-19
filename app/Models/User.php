@@ -11,6 +11,7 @@ use App\Enums\User\UserStatus;
 use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable implements FilamentUser, HasName
@@ -75,5 +76,17 @@ class User extends Authenticatable implements FilamentUser, HasName
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class);
+    }
+
+    public function walletTransactions(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            WalletTransaction::class,
+            Wallet::class,
+            'user_id',
+            'wallet_id',
+            'id',
+            'id'
+        );
     }
 }
