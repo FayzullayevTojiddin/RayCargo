@@ -7,6 +7,7 @@ enum UserRole: string
     case ADMIN   = 'admin';
     case COURIER = 'courier';
     case CLIENT  = 'client';
+    case WORKER = 'worker';
 
     public function label(): string
     {

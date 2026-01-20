@@ -5,6 +5,7 @@ return [
         'admin'   => 'Administrator',
         'courier' => 'Kuryer',
         'client'  => 'Mijoz',
+        'worker' => 'Xodim'
     ],
     'statuses' => [
         'active'   => 'Faol',
