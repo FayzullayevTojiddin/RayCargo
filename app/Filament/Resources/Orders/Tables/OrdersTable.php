@@ -3,12 +3,14 @@
 namespace App\Filament\Resources\Orders\Tables;
 
 use App\Enums\Order\OrderStatus;
+use App\Enums\User\UserRole;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
@@ -23,19 +25,8 @@ class OrdersTable
                     ->sortable()
                     ->searchable(),
 
-                TextColumn::make('client.email')
-                    ->label('Client')
-                    ->sortable()
-                    ->searchable(),
-
-                TextColumn::make('courier.email')
-                    ->label('Courier')
-                    ->sortable()
-                    ->searchable()
-                    ->default('—'),
-
                 BadgeColumn::make('status')
-                    ->label('Status')
+                    ->label('Holat')
                     ->sortable()
                     ->colors([
                         'warning' => OrderStatus::IN_PROGRESS,
@@ -45,68 +36,38 @@ class OrdersTable
                         'danger' => OrderStatus::CANCELLED,
                     ]),
 
-                TextColumn::make('vehicleType.title')
-                    ->label('Vehicle Type')
-                    ->sortable(),
-
                 TextColumn::make('total_distance_km')
-                    ->label('Distance')
+                    ->label('Masofa')
                     ->sortable()
                     ->suffix(' km')
                     ->default('—'),
 
-                TextColumn::make('total_price')
-                    ->label('Total Price')
-                    ->money('USD')
-                    ->sortable()
-                    ->default('—'),
-
-                TextColumn::make('stops_count')
-                    ->label('Stops')
-                    ->counts('stops')
-                    ->sortable(),
-
-                TextColumn::make('items_count')
-                    ->label('Price Items')
-                    ->counts('items')
-                    ->sortable(),
-
                 TextColumn::make('created_at')
                     ->label('Created')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('updated_at')
-                    ->label('Updated')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
             ])
             ->filters([
                 SelectFilter::make('status')
-                    ->label('Status')
-                    ->options(OrderStatus::class)
+                    ->label('Holat')
+                    ->options(OrderStatus::options())
                     ->multiple(),
 
                 SelectFilter::make('vehicle_type_id')
-                    ->label('Vehicle Type')
+                    ->label('Transport turi')
                     ->relationship('vehicleType', 'title')
                     ->multiple()
                     ->preload(),
 
-                SelectFilter::make('client_id')
-                    ->label('Client')
-                    ->relationship('client', 'email')
-                    ->searchable()
-                    ->preload(),
-
                 SelectFilter::make('courier_id')
                     ->label('Courier')
-                    ->relationship('courier', 'email')
+                    ->relationship('courier', 'email', fn($query) => $query->where('role', UserRole::COURIER))
+                    ->preload()
                     ->searchable()
-                    ->preload(),
             ])
+            ->filtersLayout(FiltersLayout::AboveContent)
+            ->deferFilters(false)
+            ->filtersFormColumns(3)
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),

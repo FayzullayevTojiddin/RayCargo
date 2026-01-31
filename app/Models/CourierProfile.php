@@ -22,7 +22,7 @@ class CourierProfile extends Model
     ];
 
     protected $casts = [
-        'rating' => 'decimal',
+        'rating' => 'decimal:2',
         'is_online' => 'boolean',
         'is_active' => 'boolean',
         'last_seen_at' => 'datetime',

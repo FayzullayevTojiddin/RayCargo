@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Enums\User\UserRole;
 use App\Enums\User\UserStatus;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -22,6 +23,10 @@ class UsersTable
                 TextColumn::make('email')
                     ->label('Email')
                     ->searchable(),
+
+                TextColumn::make('role')
+                    ->label('Role')
+                    ->formatStateUsing(fn (?UserRole $state) => $state?->label()),
 
                 TextColumn::make('phone_number')
                     ->label('Telefon Raqami')
