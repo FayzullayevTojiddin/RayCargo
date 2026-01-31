@@ -5,9 +5,9 @@ namespace App\Filament\Resources\ClientProfiles\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
@@ -53,7 +53,28 @@ class ClientProfilesTable
                         1 => 'Faol',
                         0 => 'Faol emas',
                     ]),
+
+                SelectFilter::make('is_online')
+                    ->label('Online holati')
+                    ->options([
+                        1 => 'Online',
+                        0 => 'Offline',
+                    ])
+                    ->native(false)
+                    ->default(0),
+
+                SelectFilter::make('is_active')
+                    ->label('Faollik')
+                    ->options([
+                        1 => 'Faol',
+                        0 => 'Faol emas',
+                    ])
+                    ->native(false)
+                    ->default(1),
             ])
+            ->filtersLayout(FiltersLayout::AboveContent)
+            ->deferFilters(false)
+            ->filtersFormColumns(2)
             ->recordActions([
                 EditAction::make()->button(),
             ])
