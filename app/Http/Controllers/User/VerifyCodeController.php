@@ -133,11 +133,6 @@ class VerifyCodeController extends Controller
 
         if ($user->status === UserStatus::INACTIVE) {
             $user->update(['status' => UserStatus::ACTIVE]);
-            
-            Log::info('User activated', [
-                'user_id' => $user->id,
-                'type' => $data['type'],
-            ]);
         }
 
         if ($data['type'] === 'phone') {
@@ -156,13 +151,6 @@ class VerifyCodeController extends Controller
         cache()->forget($valueKey);
         
         $token = $user->createToken('auth_token')->plainTextToken;
-
-        Log::info('User logged in successfully', [
-            'user_id' => $user->id,
-            'type' => $data['type'],
-            'value' => $data['value'],
-            'ip' => $request->ip(),
-        ]);
 
         return response()->json([
             'message' => __('index.auth.login_success'),
@@ -198,11 +186,6 @@ class VerifyCodeController extends Controller
                     'role' => UserRole::CLIENT,
                     'phone_verified_at' => now(),
                 ]);
-
-                Log::info('New user created via phone', [
-                    'user_id' => $user->id,
-                    'phone' => $phone,
-                ]);
             }
 
             return $user;
@@ -217,11 +200,6 @@ class VerifyCodeController extends Controller
                 'status' => UserStatus::ACTIVE,
                 'role' => UserRole::CLIENT,
                 'email_verified_at' => now(),
-            ]);
-
-            Log::info('New user created via email', [
-                'user_id' => $user->id,
-                'email' => $value,
             ]);
         }
 

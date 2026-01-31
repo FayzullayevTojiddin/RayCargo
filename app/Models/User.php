@@ -52,6 +52,7 @@ class User extends Authenticatable implements FilamentUser, HasName
         'last_login_at'     => 'datetime',
         'role' => UserRole::class,
         'status' => UserStatus::class,
+        'password' => 'hashed',
     ];
 
     protected static function booted(): void
