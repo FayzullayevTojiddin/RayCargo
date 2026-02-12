@@ -42,12 +42,15 @@ class UsersTable
                         UserStatus::BLOCKED  => 'danger',
                     })
                     ->sortable(),
+
+                TextColumn::make('wallet.balance')
+                    ->label("Balans")
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                EditAction::make()->button(),
+                EditAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

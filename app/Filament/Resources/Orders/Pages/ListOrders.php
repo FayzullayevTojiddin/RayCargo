@@ -14,14 +14,14 @@ class ListOrders extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            // CreateAction::make(),
         ];
     }
 
     public function getHeaderWidgets(): array
     {
         return [
-            OrderStats::class
+            OrderStats::class,
         ];
     }
 }

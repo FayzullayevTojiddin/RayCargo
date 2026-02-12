@@ -54,6 +54,7 @@ class UserResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
+            ->with('wallet')
             ->withCount([
                 'notifications',
                 'notifications as unread_notifications_count' => function ($query) {

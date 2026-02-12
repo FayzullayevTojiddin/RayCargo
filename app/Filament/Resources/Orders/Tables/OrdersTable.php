@@ -28,13 +28,8 @@ class OrdersTable
                 BadgeColumn::make('status')
                     ->label('Holat')
                     ->sortable()
-                    ->colors([
-                        'warning' => OrderStatus::IN_PROGRESS,
-                        'info' => OrderStatus::ACCEPTED,
-                        'primary' => OrderStatus::IN_PROGRESS,
-                        'success' => OrderStatus::COMPLETED,
-                        'danger' => OrderStatus::CANCELLED,
-                    ]),
+                    ->formatStateUsing(fn (OrderStatus $state) => $state->label())
+                    ->color(fn (OrderStatus $state) => $state->color()),
 
                 TextColumn::make('total_distance_km')
                     ->label('Masofa')
@@ -42,8 +37,12 @@ class OrdersTable
                     ->suffix(' km')
                     ->default('—'),
 
+                TextColumn::make('total_price')
+                    ->label('Umumiy narx')
+                    ->money('UZS'),
+
                 TextColumn::make('created_at')
-                    ->label('Created')
+                    ->label('Yaratilingan vaqti')
                     ->dateTime()
                     ->sortable(),
             ])
@@ -69,8 +68,8 @@ class OrdersTable
             ->deferFilters(false)
             ->filtersFormColumns(3)
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                ViewAction::make()->iconButton(),
+                EditAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

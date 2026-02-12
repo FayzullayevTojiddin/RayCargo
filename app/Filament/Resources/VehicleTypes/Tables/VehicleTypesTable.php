@@ -9,7 +9,9 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Tables\Enums\FiltersLayout;
 
 class VehicleTypesTable
 {
@@ -53,8 +55,12 @@ class VehicleTypesTable
                 TernaryFilter::make('status')
                     ->label('Status'),
             ])
+            ->deferFilters(false)
+            ->filtersFormColumns(2)
+            ->filtersLayout(FiltersLayout::AboveContent)
             ->recordActions([
-                EditAction::make()->button(),
+                EditAction::make()->iconButton(),
+                DeleteAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

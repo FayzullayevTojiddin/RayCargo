@@ -23,4 +23,15 @@ enum OrderStatus: string
             ])
             ->toArray();
     }
+
+    public function color(): string
+    {
+        return match ($this) {
+            self::IN_PROGRESS => 'warning',
+            self::ACCEPTED => 'info',
+            self::COMPLETED => 'success',
+            self::CANCELLED => 'danger',
+            self::CREATED => 'secondary'
+        };
+    }
 }

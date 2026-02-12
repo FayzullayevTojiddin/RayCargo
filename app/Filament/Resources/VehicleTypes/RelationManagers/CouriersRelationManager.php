@@ -61,6 +61,11 @@ class CouriersRelationManager extends RelationManager
                     ->label('Reyting')
                     ->numeric(1)
                     ->sortable(),
+
+                TextColumn::make('last_seen_at')
+                    ->label('Onlayn vaqti')
+                    ->since()
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -69,7 +74,7 @@ class CouriersRelationManager extends RelationManager
                 //
             ])
             ->recordActions([
-                DeleteAction::make()->button(),
+                DeleteAction::make()->iconButton(),
                 Action::make('openCourier')
                     ->label('Profil')
                     ->icon('heroicon-o-arrow-top-right-on-square')
@@ -77,7 +82,7 @@ class CouriersRelationManager extends RelationManager
                         'record' => $record,
                     ]))
                     ->openUrlInNewTab()
-                    ->button(),
+                    ->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
