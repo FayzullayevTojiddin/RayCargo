@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use UnitEnum;
 
 class ClientProfileResource extends Resource
@@ -30,6 +31,15 @@ class ClientProfileResource extends Resource
     protected static ?string $modelLabel = 'mijoz';
 
     protected static ?int $navigationSort = 2;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with([
+                'user',
+                'user.wallet',
+            ]);
+    }
 
     public static function form(Schema $schema): Schema
     {

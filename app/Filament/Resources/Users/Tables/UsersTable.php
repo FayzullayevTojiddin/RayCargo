@@ -20,13 +20,15 @@ class UsersTable
                     ->label('ID')
                     ->sortable(),
 
-                TextColumn::make('email')
-                    ->label('Email')
-                    ->searchable(),
+                TextColumn::make('name')
+                    ->label('Ism')
+                    ->searchable()
+                    ->alignCenter(),
 
                 TextColumn::make('role')
                     ->label('Role')
-                    ->formatStateUsing(fn (?UserRole $state) => $state?->label()),
+                    ->formatStateUsing(fn (?UserRole $state) => $state?->label())
+                    ->alignCenter(),
 
                 TextColumn::make('phone_number')
                     ->label('Telefon Raqami')
@@ -41,10 +43,12 @@ class UsersTable
                         UserStatus::INACTIVE => 'warning',
                         UserStatus::BLOCKED  => 'danger',
                     })
-                    ->sortable(),
+                    ->sortable()
+                    ->alignCenter(),
 
                 TextColumn::make('wallet.balance')
                     ->label("Balans")
+                    ->money('UZS')
             ])
             ->filters([
                 //

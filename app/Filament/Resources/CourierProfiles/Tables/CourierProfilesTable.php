@@ -25,10 +25,11 @@ class CourierProfilesTable
                     ->label('Rasm')
                     ->circular(),
 
-                TextColumn::make('user.email')
-                    ->label('Courier')
+                TextColumn::make('user.name')
+                    ->label('Ism')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->alignCenter(),
 
                 TextColumn::make('vehicleType.title')
                     ->label('Transport turi')

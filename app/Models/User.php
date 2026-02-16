@@ -8,13 +8,12 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Enums\User\UserRole;
 use App\Enums\User\UserStatus;
-use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class User extends Authenticatable implements FilamentUser, HasName
+class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable, HasApiTokens;
 
@@ -23,11 +22,8 @@ class User extends Authenticatable implements FilamentUser, HasName
         return $this->role === UserRole::ADMIN;
     }
 
-    public function getFilamentName(): string
-    {
-        return $this->email;
-    }
     protected $fillable = [
+        'name',
         'email',
         'phone_number',
         'image',
@@ -37,6 +33,7 @@ class User extends Authenticatable implements FilamentUser, HasName
         'role',
         'status',
         'lang',
+        'fcm_token',
         'email_verified_at',
         'phone_verified_at',
     ];

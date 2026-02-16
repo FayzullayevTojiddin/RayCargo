@@ -21,6 +21,7 @@ class ClientProfileSeeder extends Seeder
         for ($i = 1; $i <= 1000; $i++) {
             $users[] = [
                 'email' => "client{$i}@test.uz",
+                'name' => fake()->name(),
                 'password' => '$2y$12$lXIlfYRp1AQc33dqjJpB/.aYHQT8rGp0Qhz0WXx2OKWlYSE2dQMpO',
                 'role' => UserRole::CLIENT,
                 'remember_token' => Str::random(10),
@@ -55,5 +56,16 @@ class ClientProfileSeeder extends Seeder
             ->toArray();
 
         DB::table('client_profiles')->insert($data);
+
+        $wallets = collect($userIds)->map(function ($userId) use ($now) {
+            return [
+                'user_id' => $userId,
+                'balance' => 0,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ];
+        })->toArray();
+
+        DB::table('wallets')->insert($wallets);
     }
 }

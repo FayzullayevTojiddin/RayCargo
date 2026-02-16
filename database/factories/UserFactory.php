@@ -17,6 +17,7 @@ class UserFactory extends Factory
         $loginType = fake()->randomElement(['email', 'phone']);
 
         return [
+            'name' => fake()->name(),
             'email' => $loginType === 'email'
                 ? fake()->unique()->safeEmail()
                 : null,

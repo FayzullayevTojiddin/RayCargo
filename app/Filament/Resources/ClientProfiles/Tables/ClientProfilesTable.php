@@ -17,10 +17,11 @@ class ClientProfilesTable
     {
         return $table
             ->columns([
-                TextColumn::make('user.email')
-                    ->label('Email')
+                TextColumn::make('user.name')
+                    ->label('Ism')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->alignCenter(),
 
                 IconColumn::make('is_online')
                     ->label('Online')
@@ -33,6 +34,10 @@ class ClientProfilesTable
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
                     ->falseIcon('heroicon-o-x-circle'),
+
+                TextColumn::make('user.wallet.balance')
+                    ->label('Balans')
+                    ->money('UZS'),
 
                 TextColumn::make('last_seen_at')
                     ->label('Oxirgi kirish')
@@ -76,7 +81,7 @@ class ClientProfilesTable
             ->deferFilters(false)
             ->filtersFormColumns(2)
             ->recordActions([
-                EditAction::make()->button(),
+                EditAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
