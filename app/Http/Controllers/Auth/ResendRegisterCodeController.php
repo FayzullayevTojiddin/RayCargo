@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\VerificationCodeMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -55,6 +57,6 @@ class ResendRegisterCodeController extends Controller
 
     private function sendVerificationCode(string $email, int $code): void
     {
-        // TODO: Email yuborish logikasi
+        Mail::to($email)->send(new VerificationCodeMail($code));
     }
 }
