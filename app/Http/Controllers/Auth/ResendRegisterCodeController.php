@@ -17,11 +17,11 @@ class ResendRegisterCodeController extends Controller
         ]);
 
         $key = 'resend:' . $request->verification_id;
-        
+
         if (RateLimiter::tooManyAttempts($key, 3)) {
             $seconds = RateLimiter::availableIn($key);
             $minutes = ceil($seconds / 60);
-            
+
             return response()->json([
                 'success' => false,
                 'message' => __('messages.errors.too_many_attempts', ['minutes' => $minutes])
@@ -42,7 +42,7 @@ class ResendRegisterCodeController extends Controller
 
         $newCode = rand(100000, 999999);
         $data['code'] = $newCode;
-        
+
         Cache::put($cacheKey, $data, now()->addMinutes(10));
 
         $this->sendVerificationCode($data['email'], $newCode);

@@ -2,55 +2,51 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\User\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Models\User;
-use App\Enums\User\UserStatus;
 
 class LoginController extends Controller
 {
-    public function __invoke(LoginRequest $request): JsonResponse
+    public function __invoke(LoginRequest $request)
     {
         $key = 'login:' . $request->ip();
-        
+
         if (RateLimiter::tooManyAttempts($key, 5)) {
-            $seconds = RateLimiter::availableIn($key);
-            $minutes = ceil($seconds / 60);
-            
             return response()->json([
                 'success' => false,
-                'message' => __('messages.errors.too_many_attempts', ['minutes' => $minutes])
+                'message' => __('messages.errors.too_many_attempts'),
             ], 429);
         }
 
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            RateLimiter::hit($key, 86400);
-            
+            RateLimiter::hit($key, 60);
+
             return response()->json([
                 'success' => false,
-                'message' => __('messages.auth.failed')
+                'message' => __('messages.auth.failed'),
             ], 401);
         }
 
         if ($user->status === UserStatus::BLOCKED) {
             return response()->json([
                 'success' => false,
-                'message' => __('messages.auth.user_blocked')
+                'message' => __('messages.auth.user_blocked'),
             ], 403);
         }
 
         RateLimiter::clear($key);
 
         $user->update([
-            'last_login_at' => now(),
-            'fcm_token' => $request->fcm_token,
-            'email_verified_at' => now(),
             'login_type' => 'email',
+            'last_login_at' => now(),
+            'email_verified_at' => $user->email_verified_at ?? now(),
+            'fcm_token' => $request->fcm_token ?? $user->fcm_token,
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -59,9 +55,9 @@ class LoginController extends Controller
             'success' => true,
             'message' => __('messages.auth.login_success'),
             'data' => [
-                'user' => $user->fresh(),
+                'user' => $user,
                 'token' => $token,
-            ]
-        ]);
+            ],
+        ], 200);
     }
 }

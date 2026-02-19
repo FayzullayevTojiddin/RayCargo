@@ -21,11 +21,11 @@ class VerifyRegisterController extends Controller
         ]);
 
         $key = 'verify:' . $request->ip();
-        
+
         if (RateLimiter::tooManyAttempts($key, 5)) {
             $seconds = RateLimiter::availableIn($key);
             $minutes = ceil($seconds / 60);
-            
+
             return response()->json([
                 'success' => false,
                 'message' => __('messages.errors.too_many_attempts', ['minutes' => $minutes])
@@ -44,7 +44,7 @@ class VerifyRegisterController extends Controller
 
         if ($data['code'] != $request->code) {
             RateLimiter::hit($key, 3600);
-            
+
             return response()->json([
                 'success' => false,
                 'message' => __('messages.auth.verification_code_invalid')

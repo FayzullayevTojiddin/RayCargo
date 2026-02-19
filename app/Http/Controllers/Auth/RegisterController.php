@@ -14,11 +14,11 @@ class RegisterController extends Controller
     public function __invoke(RegisterRequest $request): JsonResponse
     {
         $key = 'register:' . $request->ip();
-        
+
         if (RateLimiter::tooManyAttempts($key, 3)) {
             $seconds = RateLimiter::availableIn($key);
             $minutes = ceil($seconds / 60);
-            
+
             return response()->json([
                 'success' => false,
                 'message' => __('messages.errors.too_many_attempts', ['minutes' => $minutes])
