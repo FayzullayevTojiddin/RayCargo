@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la \"C:\\\\Users\\\\fayzu\\\\Desktop\\\\January-26\\\\RayCargo\\\\app\\\\Services\"\" 2>/dev/null || echo \"Services folder check \")",
+      "Bash(php artisan test:*)"
+    ]
+  }
+}

@@ -11,6 +11,11 @@ return [
         'verification_expired' => "Tasdiqlash kodi eskirgan",
         'register_success' => "Ro'yxatdan muvaffaqiyatli o'tdingiz",
     ],
+    'order' => [
+        'price_calculated' => "Narx muvaffaqiyatli hisoblandi.",
+        'created' => "Buyurtma muvaffaqiyatli yaratildi.",
+        'vehicle_type_not_available' => "Tanlangan transport turi mavjud emas.",
+    ],
     'profile' => [
         'updated' => "Profil muvaffaqiyatli yangilandi.",
         'image_updated' => "Profil rasmi muvaffaqiyatli yangilandi.",

@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')->constrained('users')->onDelete(null);
-            $table->foreignId('courier_id')->constrained('users')->onDelete(null);
+            $table->foreignId('courier_id')->nullable()->constrained('users')->onDelete(null);
             $table->foreignId('vehicle_type_id')->constrained()->onDelete(null);
             $table->string('status')->default('created');
             $table->decimal('total_distance_km', 8, 2);
