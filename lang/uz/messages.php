@@ -11,6 +11,10 @@ return [
         'verification_expired' => "Tasdiqlash kodi eskirgan",
         'register_success' => "Ro'yxatdan muvaffaqiyatli o'tdingiz",
     ],
+    'profile' => [
+        'updated' => "Profil muvaffaqiyatli yangilandi.",
+        'image_updated' => "Profil rasmi muvaffaqiyatli yangilandi.",
+    ],
     'errors' => [
         'too_many_attempts' => "Juda ko'p urinish. Iltimos :minutes daqiqadan keyin qayta urinib ko'ring.",
     ],
