@@ -45,6 +45,6 @@ class CourierProfile extends Model
 
     public function orders(): HasMany
     {
-        return $this->hasMany(Order::class, 'courier_id');
+        return $this->hasMany(Order::class, 'courier_id', 'user_id');
     }
 }

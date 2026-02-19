@@ -5,6 +5,7 @@ namespace App\Filament\Resources\CourierProfiles;
 use App\Filament\Resources\CourierProfiles\Pages\CreateCourierProfile;
 use App\Filament\Resources\CourierProfiles\Pages\EditCourierProfile;
 use App\Filament\Resources\CourierProfiles\Pages\ListCourierProfiles;
+use App\Filament\Resources\CourierProfiles\RelationManagers\OrdersRelationManager;
 use App\Filament\Resources\CourierProfiles\Schemas\CourierProfileForm;
 use App\Filament\Resources\CourierProfiles\Tables\CourierProfilesTable;
 use App\Models\CourierProfile;
@@ -55,7 +56,7 @@ class CourierProfileResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            OrdersRelationManager::class,
         ];
     }
 
