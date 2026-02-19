@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\ResendRegisterCodeController;
 use App\Http\Controllers\Auth\VerifyRegisterController;
 use App\Http\Controllers\Order\CalculatePriceController;
 use App\Http\Controllers\Order\CreateOrderController;
+use App\Http\Controllers\Order\ListOrdersController;
 use App\Http\Controllers\Profile\UpdateProfileController;
 use App\Http\Controllers\Profile\UpdateProfileImageController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,7 @@ Route::middleware('language')->group(function () {
         });
 
         Route::prefix('/orders')->group(function () {
+            Route::get('/', ListOrdersController::class);
             Route::post('/calculate-price', CalculatePriceController::class);
             Route::post('/', CreateOrderController::class);
         });
