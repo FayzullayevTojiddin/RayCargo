@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Orders\Schemas;
 use App\Enums\Order\OrderPriceItemType;
 use App\Enums\Order\OrderStatus;
 use App\Enums\Order\OrderStopType;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Repeater;
@@ -124,18 +125,21 @@ class OrderForm
                                             ->disabled(),
                                     ]),
 
-                                TextInput::make('meta')
+                                KeyValue::make('meta')
                                     ->label('Ma`lumotlar')
                                     ->columnSpanFull()
-                                    ->disabled(),
+                                    ->disabled()
+                                    ->addable(false)
+                                    ->deletable(false)
+                                    ->editableKeys(false),
                             ])
                             ->deletable(false)
                             ->addable(false)
                             ->reorderable(false)
                             ->collapsible()
-                            ->itemLabel(fn (array $state): ?string => 
-                                isset($state['type']) && isset($state['amount']) 
-                                    ? "{$state['type']}: \${$state['amount']}" 
+                            ->itemLabel(fn (array $state): ?string =>
+                                isset($state['type']) && isset($state['amount'])
+                                    ? (OrderPriceItemType::tryFrom($state['type'])?->label() ?? $state['type']) . ": {$state['amount']} so'm"
                                     : null
                             )
                             ->columnSpanFull(),
