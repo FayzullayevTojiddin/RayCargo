@@ -20,8 +20,12 @@ class VehicleTypeForm
                             ->label('Transport nomi')
                             ->placeholder('Masalan: Yengil avtomobil, Moto, Yuk mashinasi')
                             ->required()
-                            ->maxLength(255)
-                            ->columnSpan(2),
+                            ->maxLength(255),
+
+                        TextInput::make('icon')
+                            ->label('Ikonka nomi')
+                            ->placeholder('Masalan: car, truck, motorcycle')
+                            ->maxLength(255),
 
                         TextInput::make('max_weight_kg')
                             ->label('Maksimal yuk (kg)')
