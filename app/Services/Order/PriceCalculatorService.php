@@ -51,6 +51,7 @@ class PriceCalculatorService
             $result[] = [
                 'id' => $vehicleType->id,
                 'title' => $vehicleType->title,
+                'icon' => $vehicleType->icon,
                 'max_weight_kg' => $vehicleType->max_weight_kg,
                 'price_breakdown' => $this->calculateBreakdown($vehicleType, $totalDistance),
                 'total_price' => $this->calculatePrice($vehicleType, $totalDistance),

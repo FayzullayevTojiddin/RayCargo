@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->boolean('status')->default(false);
             $table->string('title')->unique();
+            $table->string('icon')->nullable();
             $table->integer('max_weight_kg');
             $table->decimal('base_price');
             $table->decimal('price_per_kg');

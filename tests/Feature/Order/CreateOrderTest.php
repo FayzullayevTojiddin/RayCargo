@@ -61,13 +61,15 @@ class CreateOrderTest extends TestCase
                     'order' => [
                         'id',
                         'client_id',
-                        'vehicle_type_id',
                         'status',
                         'total_distance_km',
                         'total_price',
                         'stops',
                         'items',
-                        'vehicle_type',
+                        'vehicle_type' => [
+                            'id',
+                            'icon',
+                        ],
                     ]
                 ]
             ]);

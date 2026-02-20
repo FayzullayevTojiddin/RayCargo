@@ -77,7 +77,8 @@ class CreateOrderController extends Controller
             return $order;
         });
 
-        $order->load(['stops', 'items', 'vehicleType']);
+        $order->load(['stops', 'items', 'vehicleType:id,icon']);
+        $order->setHidden(['vehicle_type_id']);
 
         return response()->json([
             'success' => true,

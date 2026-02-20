@@ -9,6 +9,7 @@ class VehicleType extends Model
 {
     protected $fillable = [
         'title',
+        'icon',
         'status',
         'max_weight_kg',
         'base_price',

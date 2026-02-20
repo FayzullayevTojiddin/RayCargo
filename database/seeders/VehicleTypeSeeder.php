@@ -12,6 +12,7 @@ class VehicleTypeSeeder extends Seeder
         $vehicleTypes = [
             [
                 'title' => 'Piyoda',
+                'icon' => 'walking',
                 'status' => true,
                 'max_weight_kg' => 5,
                 'base_price' => 5000,
@@ -24,6 +25,7 @@ class VehicleTypeSeeder extends Seeder
             ],
             [
                 'title' => 'Velosiped',
+                'icon' => 'bicycle',
                 'status' => true,
                 'max_weight_kg' => 15,
                 'base_price' => 8000,
@@ -36,6 +38,7 @@ class VehicleTypeSeeder extends Seeder
             ],
             [
                 'title' => 'Mototsikl',
+                'icon' => 'motorcycle',
                 'status' => true,
                 'max_weight_kg' => 30,
                 'base_price' => 15000,
@@ -48,6 +51,7 @@ class VehicleTypeSeeder extends Seeder
             ],
             [
                 'title' => 'Avtomobil (Sedan)',
+                'icon' => 'car',
                 'status' => true,
                 'max_weight_kg' => 100,
                 'base_price' => 25000,
@@ -60,6 +64,7 @@ class VehicleTypeSeeder extends Seeder
             ],
             [
                 'title' => 'Yengil yuk mashinasi',
+                'icon' => 'truck-small',
                 'status' => true,
                 'max_weight_kg' => 500,
                 'base_price' => 40000,
@@ -72,6 +77,7 @@ class VehicleTypeSeeder extends Seeder
             ],
             [
                 'title' => 'Yuk mashinasi (Gazelle)',
+                'icon' => 'truck',
                 'status' => true,
                 'max_weight_kg' => 1500,
                 'base_price' => 60000,
@@ -84,6 +90,7 @@ class VehicleTypeSeeder extends Seeder
             ],
             [
                 'title' => 'Katta yuk mashinasi',
+                'icon' => 'truck-large',
                 'status' => true,
                 'max_weight_kg' => 5000,
                 'base_price' => 100000,

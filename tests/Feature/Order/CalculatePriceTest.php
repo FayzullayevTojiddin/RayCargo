@@ -89,6 +89,7 @@ class CalculatePriceTest extends TestCase
                         '*' => [
                             'id',
                             'title',
+                            'icon',
                             'max_weight_kg',
                             'price_breakdown' => [
                                 'base_price',
