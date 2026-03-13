@@ -13,8 +13,8 @@ return new class extends Migration
         });
 
         // Migrate existing data
-        DB::statement('UPDATE users u JOIN courier_profiles cp ON u.id = cp.user_id SET u.last_seen_at = cp.last_seen_at WHERE cp.last_seen_at IS NOT NULL');
-        DB::statement('UPDATE users u JOIN client_profiles clp ON u.id = clp.user_id SET u.last_seen_at = clp.last_seen_at WHERE clp.last_seen_at IS NOT NULL');
+        DB::statement('UPDATE users SET last_seen_at = cp.last_seen_at FROM courier_profiles cp WHERE users.id = cp.user_id AND cp.last_seen_at IS NOT NULL');
+        DB::statement('UPDATE users SET last_seen_at = clp.last_seen_at FROM client_profiles clp WHERE users.id = clp.user_id AND clp.last_seen_at IS NOT NULL');
 
         Schema::table('courier_profiles', function (Blueprint $table) {
             $table->dropColumn(['last_seen_at', 'image']);
