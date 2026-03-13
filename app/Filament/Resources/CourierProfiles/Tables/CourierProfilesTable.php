@@ -56,10 +56,13 @@ class CourierProfilesTable
                 TextColumn::make('rating')
                     ->label('Reyting')
                     ->numeric(1)
-                    ->sortable(),
+                    ->sortable()
+                    ->alignCenter()
+                    ->icon('heroicon-s-star')
+                    ->iconColor('warning'),
 
                 TextColumn::make('application_status')
-                    ->label('Ariza holati')
+                    ->label('Holati')
                     ->badge()
                     ->color(fn (string $state) => match ($state) {
                         'pending' => 'warning',
@@ -69,7 +72,7 @@ class CourierProfilesTable
                     })
                     ->formatStateUsing(fn (string $state) => match ($state) {
                         'pending' => 'Kutilmoqda',
-                        'approved' => 'Tasdiqlangan',
+                        'approved' => 'Faol',
                         'rejected' => 'Rad etilgan',
                         default => $state,
                     })
@@ -104,7 +107,6 @@ class CourierProfilesTable
             ])
             ->recordActions([
                 Action::make('approve')
-                    ->label('Tasdiqlash')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->requiresConfirmation()
@@ -118,10 +120,9 @@ class CourierProfilesTable
                             'rejection_reason' => null,
                         ]);
                     })
-                    ->button(),
+                    ->iconButton(),
 
                 Action::make('reject')
-                    ->label('Rad etish')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
                     ->form([
@@ -137,9 +138,9 @@ class CourierProfilesTable
                             'rejection_reason' => $data['rejection_reason'],
                         ]);
                     })
-                    ->button(),
+                    ->iconButton(),
 
-                EditAction::make()->button(),
+                EditAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
