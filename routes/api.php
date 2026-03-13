@@ -17,6 +17,7 @@ use App\Http\Controllers\Courier\SubmitProfileController;
 use App\Http\Controllers\Order\CalculatePriceController;
 use App\Http\Controllers\Order\CreateOrderController;
 use App\Http\Controllers\Order\ListOrdersController;
+use App\Http\Controllers\Order\ShowOrderController;
 use App\Http\Controllers\Profile\UpdateProfileController;
 use App\Http\Controllers\Profile\UpdateProfileImageController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,7 @@ Route::middleware('language')->group(function () {
 
         Route::prefix('/orders')->group(function () {
             Route::get('/', ListOrdersController::class);
+            Route::get('/{order}', ShowOrderController::class);
             Route::post('/calculate-price', CalculatePriceController::class);
             Route::post('/', CreateOrderController::class);
         });
