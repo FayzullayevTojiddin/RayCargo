@@ -44,7 +44,7 @@ class CouriersRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('user_id')
             ->columns([
-                ImageColumn::make('image')
+                ImageColumn::make('user.image')
                     ->label('Rasm')
                     ->circular(),
 
@@ -62,7 +62,7 @@ class CouriersRelationManager extends RelationManager
                     ->numeric(1)
                     ->sortable(),
 
-                TextColumn::make('last_seen_at')
+                TextColumn::make('user.last_seen_at')
                     ->label('Onlayn vaqti')
                     ->since()
                     ->sortable(),

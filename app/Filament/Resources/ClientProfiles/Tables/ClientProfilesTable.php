@@ -39,7 +39,7 @@ class ClientProfilesTable
                     ->label('Balans')
                     ->money('UZS'),
 
-                TextColumn::make('last_seen_at')
+                TextColumn::make('user.last_seen_at')
                     ->label('Oxirgi kirish')
                     ->dateTime('d.m.Y H:i')
                     ->sortable(),

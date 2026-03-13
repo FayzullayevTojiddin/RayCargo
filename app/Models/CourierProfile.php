@@ -11,22 +11,36 @@ class CourierProfile extends Model
 {
     protected $fillable = [
         'user_id',
+        'is_pedestrian',
         'vehicle_type_id',
-        'image',
         'vehicle_number',
+        'vehicle_brand',
+        'vehicle_model',
+        'vehicle_color',
         'license_number',
         'rating',
         'is_online',
         'is_active',
-        'last_seen_at'
+        'application_status',
+        'rejection_reason',
     ];
 
     protected $casts = [
         'rating' => 'decimal:2',
         'is_online' => 'boolean',
         'is_active' => 'boolean',
-        'last_seen_at' => 'datetime',
+        'is_pedestrian' => 'boolean',
     ];
+
+    public function getLastSeenAtAttribute()
+    {
+        return $this->user?->last_seen_at;
+    }
+
+    public function getImageAttribute()
+    {
+        return $this->user?->image;
+    }
 
     public function user(): BelongsTo
     {
@@ -41,6 +55,18 @@ class CourierProfile extends Model
     public function location(): HasOne
     {
         return $this->hasOne(CourierLocation::class);
+    }
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(CourierDocument::class);
+    }
+
+    public function vehiclePhotos(): HasMany
+    {
+        return $this->hasMany(CourierDocument::class)->whereIn('type', [
+            'vehicle_front', 'vehicle_back', 'vehicle_left', 'vehicle_right',
+        ]);
     }
 
     public function orders(): HasMany

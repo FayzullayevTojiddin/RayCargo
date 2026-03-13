@@ -36,6 +36,7 @@ class User extends Authenticatable implements FilamentUser
         'fcm_token',
         'email_verified_at',
         'phone_verified_at',
+        'last_seen_at',
     ];
 
     protected $hidden = [
@@ -47,6 +48,7 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'phone_verified_at' => 'datetime',
         'last_login_at'     => 'datetime',
+        'last_seen_at'      => 'datetime',
         'role' => UserRole::class,
         'status' => UserStatus::class,
         'password' => 'hashed',
@@ -64,6 +66,11 @@ class User extends Authenticatable implements FilamentUser
     public function client(): HasOne
     {
         return $this->hasOne(ClientProfile::class);
+    }
+
+    public function courierProfile(): HasOne
+    {
+        return $this->hasOne(CourierProfile::class);
     }
 
     public function wallet(): HasOne

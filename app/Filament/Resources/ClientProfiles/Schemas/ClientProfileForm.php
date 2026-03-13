@@ -25,7 +25,7 @@ class ClientProfileForm
                             ->dehydrated(false)
                             ->columnSpan(2),
 
-                        DateTimePicker::make('last_seen_at')
+                        DateTimePicker::make('user.last_seen_at')
                             ->label('Oxirgi kirish vaqti')
                             ->seconds(false)
                             ->disabled()

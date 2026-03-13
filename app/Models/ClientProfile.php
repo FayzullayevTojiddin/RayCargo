@@ -15,8 +15,12 @@ class ClientProfile extends Model
         'user_id',
         'is_online',
         'is_active',
-        'last_seen_at'
     ];
+
+    public function getLastSeenAtAttribute()
+    {
+        return $this->user?->last_seen_at;
+    }
 
     public function user(): BelongsTo
     {

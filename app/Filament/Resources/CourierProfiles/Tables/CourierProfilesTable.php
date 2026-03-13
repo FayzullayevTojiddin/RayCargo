@@ -5,11 +5,14 @@ namespace App\Filament\Resources\CourierProfiles\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\Action;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Enums\FiltersLayout;
 
 class CourierProfilesTable
@@ -19,9 +22,9 @@ class CourierProfilesTable
         return $table
             ->filtersLayout(FiltersLayout::AboveContent)
             ->deferFilters(false)
-            ->filtersFormColumns(2)
+            ->filtersFormColumns(3)
             ->columns([
-                ImageColumn::make('image')
+                ImageColumn::make('user.image')
                     ->label('Rasm')
                     ->circular(),
 
@@ -31,21 +34,49 @@ class CourierProfilesTable
                     ->sortable()
                     ->alignCenter(),
 
-                TextColumn::make('vehicleType.title')
-                    ->label('Transport turi')
+                IconColumn::make('is_pedestrian')
+                    ->label('Piyoda')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-user')
+                    ->falseIcon('heroicon-o-truck'),
+
+                TextColumn::make('vehicle_brand')
+                    ->label('Mashina')
+                    ->formatStateUsing(fn ($record) => $record->is_pedestrian
+                        ? 'Piyoda'
+                        : trim("{$record->vehicle_brand} {$record->vehicle_model}")
+                    )
                     ->sortable(),
 
                 TextColumn::make('vehicle_number')
                     ->label('Avto raqam')
-                    ->searchable(),
+                    ->searchable()
+                    ->placeholder('—'),
 
                 TextColumn::make('rating')
                     ->label('Reyting')
                     ->numeric(1)
                     ->sortable(),
 
-                TextColumn::make('last_seen_at')
-                    ->label('Oxirgi ko‘rilgan')
+                TextColumn::make('application_status')
+                    ->label('Ariza holati')
+                    ->badge()
+                    ->color(fn (string $state) => match ($state) {
+                        'pending' => 'warning',
+                        'approved' => 'success',
+                        'rejected' => 'danger',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (string $state) => match ($state) {
+                        'pending' => 'Kutilmoqda',
+                        'approved' => 'Tasdiqlangan',
+                        'rejected' => 'Rad etilgan',
+                        default => $state,
+                    })
+                    ->sortable(),
+
+                TextColumn::make('user.last_seen_at')
+                    ->label('Oxirgi ko'rilgan')
                     ->dateTime('d.m.Y H:i')
                     ->sortable(),
             ])
@@ -62,8 +93,52 @@ class CourierProfilesTable
                     ->relationship('vehicleType', 'title')
                     ->searchable()
                     ->preload(),
+
+                SelectFilter::make('application_status')
+                    ->label('Ariza holati')
+                    ->options([
+                        'pending' => 'Kutilmoqda',
+                        'approved' => 'Tasdiqlangan',
+                        'rejected' => 'Rad etilgan',
+                    ]),
             ])
             ->recordActions([
+                Action::make('approve')
+                    ->label('Tasdiqlash')
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->modalHeading('Arizani tasdiqlash')
+                    ->modalDescription('Ushbu courierni tasdiqlashni xohlaysizmi?')
+                    ->visible(fn ($record) => $record->application_status === 'pending')
+                    ->action(function ($record) {
+                        $record->update([
+                            'application_status' => 'approved',
+                            'is_active' => true,
+                            'rejection_reason' => null,
+                        ]);
+                    })
+                    ->button(),
+
+                Action::make('reject')
+                    ->label('Rad etish')
+                    ->icon('heroicon-o-x-circle')
+                    ->color('danger')
+                    ->form([
+                        Textarea::make('rejection_reason')
+                            ->label('Rad etish sababi')
+                            ->required()
+                            ->maxLength(1000),
+                    ])
+                    ->visible(fn ($record) => $record->application_status === 'pending')
+                    ->action(function ($record, array $data) {
+                        $record->update([
+                            'application_status' => 'rejected',
+                            'rejection_reason' => $data['rejection_reason'],
+                        ]);
+                    })
+                    ->button(),
+
                 EditAction::make()->button(),
             ])
             ->toolbarActions([
