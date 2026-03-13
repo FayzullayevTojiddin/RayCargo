@@ -76,7 +76,7 @@ class CourierProfilesTable
                     ->sortable(),
 
                 TextColumn::make('user.last_seen_at')
-                    ->label('Oxirgi ko'rilgan')
+                    ->label('Oxirgi ko\'rilgan')
                     ->dateTime('d.m.Y H:i')
                     ->sortable(),
             ])
