@@ -5,6 +5,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResendRegisterCodeController;
 use App\Http\Controllers\Auth\VerifyRegisterController;
 use App\Http\Controllers\Courier\ApplicationStatusController;
+use App\Http\Controllers\Notification\ListNotificationsController;
+use App\Http\Controllers\Notification\ReadAllNotificationsController;
+use App\Http\Controllers\Notification\ReadNotificationController;
+use App\Http\Controllers\Notification\UnreadCountController;
 use App\Http\Controllers\Courier\Auth\LoginController as CourierLoginController;
 use App\Http\Controllers\Courier\Auth\RegisterController as CourierRegisterController;
 use App\Http\Controllers\Courier\Auth\ResendCodeController as CourierResendCodeController;
@@ -29,6 +33,13 @@ Route::middleware('language')->group(function () {
         Route::prefix('/profile')->group(function () {
             Route::put('/', UpdateProfileController::class);
             Route::post('/image', UpdateProfileImageController::class);
+        });
+
+        Route::prefix('/notifications')->group(function () {
+            Route::get('/', ListNotificationsController::class);
+            Route::get('/unread-count', UnreadCountController::class);
+            Route::post('/read-all', ReadAllNotificationsController::class);
+            Route::post('/{notification}/read', ReadNotificationController::class);
         });
 
         Route::prefix('/orders')->group(function () {
