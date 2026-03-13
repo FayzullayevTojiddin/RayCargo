@@ -26,7 +26,9 @@ class CourierProfileForm
                                 FileUpload::make('user.image')
                                     ->label('Courier rasmi')
                                     ->image()
-                                    ->directory('users'),
+                                    ->disk('public')
+                                    ->directory('users')
+                                    ->visibility('public'),
 
                                 Select::make('user_id')
                                     ->label('Courier (User)')

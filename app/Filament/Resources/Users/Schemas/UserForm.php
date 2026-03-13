@@ -80,7 +80,9 @@ class UserForm
                         FileUpload::make('image')
                                 ->label('Foydalanuvchi Rasmi')
                                 ->image()
+                                ->disk('public')
                                 ->directory('users')
+                                ->visibility('public')
                                 ->columnSpan(2),
 
                         Select::make('status')

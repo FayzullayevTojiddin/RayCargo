@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MeController extends Controller
@@ -19,7 +20,7 @@ class MeController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'phone_number' => $user->phone_number,
-                'image' => $user->image ? asset('uploads/' . $user->image) : null,
+                'image' => $user->image ? Storage::url($user->image) : null,
                 'role' => $user->role,
                 'status' => $user->status,
                 'lang' => $user->lang,
