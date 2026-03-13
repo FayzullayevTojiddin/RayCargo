@@ -40,18 +40,6 @@ class CourierProfilesTable
                     ->trueIcon('heroicon-o-user')
                     ->falseIcon('heroicon-o-truck'),
 
-                TextColumn::make('vehicle_brand')
-                    ->label('Mashina')
-                    ->formatStateUsing(fn ($record) => $record->is_pedestrian
-                        ? 'Piyoda'
-                        : trim("{$record->vehicle_brand} {$record->vehicle_model}")
-                    )
-                    ->sortable(),
-
-                TextColumn::make('vehicle_number')
-                    ->label('Avto raqam')
-                    ->searchable()
-                    ->placeholder('—'),
 
                 TextColumn::make('rating')
                     ->label('Reyting')
