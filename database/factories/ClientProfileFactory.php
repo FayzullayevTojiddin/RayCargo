@@ -15,7 +15,6 @@ class ClientProfileFactory extends Factory
             'user_id' => null,
             'is_online' => $this->faker->boolean(30),
             'is_active' => $this->faker->boolean(85),
-            'last_seen_at' => $this->faker->dateTimeBetween('-7 days', 'now'),
         ];
     }
 
@@ -23,7 +22,6 @@ class ClientProfileFactory extends Factory
     {
         return $this->state(fn () => [
             'is_online' => true,
-            'last_seen_at' => now(),
         ]);
     }
 
@@ -31,7 +29,6 @@ class ClientProfileFactory extends Factory
     {
         return $this->state(fn () => [
             'is_online' => false,
-            'last_seen_at' => $this->faker->dateTimeBetween('-30 days', '-1 hour'),
         ]);
     }
 

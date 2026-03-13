@@ -48,7 +48,6 @@ class ClientProfileSeeder extends Seeder
                     'user_id' => $userIds[$index],
                     'is_online' => $profile->is_online,
                     'is_active' => $profile->is_active,
-                    'last_seen_at' => $profile->last_seen_at,
                     'created_at' => $now,
                     'updated_at' => $now,
                 ];
