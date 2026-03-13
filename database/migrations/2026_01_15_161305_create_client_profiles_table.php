@@ -13,14 +13,11 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->unique();
             $table->boolean('is_online')->default(false);
             $table->boolean('is_active')->default(false);
-            $table->dateTime('last_seen_at')->nullable();
             $table->timestamps();
 
-            $table->unique('user_id');
             $table->index('is_online');
             $table->index('is_active');
             $table->index(['is_online', 'is_active']);
-            $table->index('last_seen_at');
         });
     }
 

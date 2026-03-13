@@ -11,22 +11,27 @@ return new class extends Migration
         Schema::create('courier_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->unique();
-            $table->foreignId('vehicle_type_id')->constrained()->restrictOnDelete();
-            $table->string('image')->nullable();
+            $table->boolean('is_pedestrian')->default(false);
+            $table->foreignId('vehicle_type_id')->nullable()->constrained()->restrictOnDelete();
 
-            $table->string('vehicle_number', 20);
-            $table->string('license_number', 50);
+            $table->string('vehicle_number', 20)->nullable();
+            $table->string('vehicle_brand')->nullable();
+            $table->string('vehicle_model')->nullable();
+            $table->string('vehicle_color')->nullable();
+            $table->string('license_number', 50)->nullable();
 
             $table->decimal('rating', 3, 2)->default(5.00);
 
             $table->boolean('is_online')->default(false);
             $table->boolean('is_active')->default(false);
 
-            $table->dateTime('last_seen_at')->nullable();
+            $table->string('application_status')->default('pending');
+            $table->text('rejection_reason')->nullable();
 
             $table->timestamps();
 
             $table->index(['is_online', 'is_active']);
+            $table->index('application_status');
         });
     }
 

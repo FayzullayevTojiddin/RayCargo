@@ -26,6 +26,7 @@ return new class extends Migration
             $table->enum('login_type', ['email', 'phone'])->default('email');
 
             $table->timestamp('last_login_at')->nullable();
+            $table->dateTime('last_seen_at')->nullable();
 
             $table->enum('role', ['admin', 'courier', 'client'])->default('client');
             $table->enum('status', ['active', 'inactive', 'blocked'])->default('active');
