@@ -18,6 +18,7 @@ use App\Http\Controllers\Order\CalculatePriceController;
 use App\Http\Controllers\Order\CreateOrderController;
 use App\Http\Controllers\Order\ListOrdersController;
 use App\Http\Controllers\Order\ShowOrderController;
+use App\Http\Controllers\Profile\MeController;
 use App\Http\Controllers\Profile\UpdateProfileController;
 use App\Http\Controllers\Profile\UpdateProfileImageController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,8 @@ Route::middleware('language')->group(function () {
     });
 
     Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/me', MeController::class);
+
         Route::prefix('/profile')->group(function () {
             Route::put('/', UpdateProfileController::class);
             Route::post('/image', UpdateProfileImageController::class);
